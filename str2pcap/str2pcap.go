@@ -32,9 +32,10 @@ func main() {
 		output = flag.String("o", "WOW.pcap", "Name of PCAP to export.")
 	)
 	flag.Parse()
+
 	if *input == "" {
 		flag.Usage()
-		os.Exit(1)
+		os.Exit(-1)
 	}
 
 	// Convert string into binary.
@@ -43,17 +44,17 @@ func main() {
 	if maybeBase64(*input) { // guess format b64 or hex.
 		data, err = base64.StdEncoding.DecodeString(*input)
 		if err != nil {
-			log.Println(err)
+			log.Fatalf("Failed to decode string %s", err)
 		}
 	} else { // try hex.
 		data, err = hex.DecodeString(*input)
 		if err != nil {
-			log.Println(err)
+			log.Fatalf("Failed to decode string %s", err)
 		}
 	}
 	// Unexpected. This shouldn't be called.
 	if data == nil {
-		log.Fatal("Hey, something went wrong ¯\\_(ツ)_/¯")
+		log.Fatalf("Hey, something went wrong in data ¯\\_(ツ)_/¯, %s", data)
 	}
 
 	// Create file to be written.
@@ -61,6 +62,7 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
+	defer f.Close()
 
 	// Setup PCAP writer.
 	w := pcapgo.NewWriter(f)
