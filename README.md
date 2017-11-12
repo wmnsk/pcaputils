@@ -14,7 +14,7 @@ Utilities to handle PCAPs, written in Golang.
 ### Getting started
 
 1. Install Go from [Official Site](https://golang.org/doc/install).
-2. Install the tools you want by `go get github.com/pcaputils/<tool>`.
+2. Install the tools you want by `go get github.com/wmnsk/pcaputils/<tool>`.
 3. `cd` to `$GOPATH/src/github.com/wmnsk/pcaputils/<tool>`
 4. Build it by `go build <tool>.go` or try it by `go run <tool>.go`.
 
